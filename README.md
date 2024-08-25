@@ -1,7 +1,3 @@
-Here's a detailed and user-friendly `README.md` template you can use for your VidVortex repository:
-
----
-
 # VidVortex
 
 **VidVortex** is a powerful, cross-platform Bash script that makes it easy to download and merge YouTube videos and audio in the highest quality. It works seamlessly on Windows, Linux, and macOS.
