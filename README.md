@@ -16,6 +16,34 @@ Before using VidVortex, ensure that the following tools are installed:
 - **yt-dlp**: A YouTube downloader that supports a wide variety of sites. [Install instructions](https://github.com/yt-dlp/yt-dlp#installation)
 - **ffmpeg**: A tool to process and merge video/audio files. [Install instructions](https://ffmpeg.org/download.html)
 
+### Installation of Dependencies
+
+#### Windows
+
+1. **yt-dlp**: 
+   - Download the `yt-dlp.exe` from the [official releases page](https://github.com/yt-dlp/yt-dlp/releases/latest).
+   - Add the directory containing `yt-dlp.exe` to your system's PATH.
+
+2. **ffmpeg**:
+   - Download `ffmpeg` from [ffmpeg.org](https://ffmpeg.org/download.html).
+   - Extract the files and add the `bin` directory containing `ffmpeg.exe` to your system's PATH.
+
+#### macOS
+
+1. **yt-dlp**:
+   - Install via Homebrew: `brew install yt-dlp`
+
+2. **ffmpeg**:
+   - Install via Homebrew: `brew install ffmpeg`
+
+#### Linux
+
+1. **yt-dlp**:
+   - Install via your package manager or download directly from the [official releases page](https://github.com/yt-dlp/yt-dlp/releases/latest).
+
+2. **ffmpeg**:
+   - Install via your package manager, e.g., `sudo apt install ffmpeg`.
+
 ## Installation
 
 1. **Clone the Repository**:
@@ -28,9 +56,6 @@ Before using VidVortex, ensure that the following tools are installed:
    ```bash
    chmod +x VidVortex.sh
    ```
-
-3. **Set Up Dependencies**:
-   - Install `yt-dlp` and `ffmpeg` if you haven't already.
 
 ## Usage
 
@@ -61,14 +86,3 @@ Feel free to fork this repository, make changes, and submit a pull request. Cont
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-### Key Points in the README:
-- **Introduction**: Briefly introduces what VidVortex does.
-- **Features**: Highlights key features.
-- **Requirements**: Lists dependencies and how to install them.
-- **Installation**: Step-by-step guide to getting started.
-- **Usage**: Instructions on how to use the script.
-- **Troubleshooting**: Common issues and solutions.
-- **Contributing**: Encourages contributions and provides a license.
