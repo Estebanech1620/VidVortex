@@ -57,6 +57,90 @@ Before using VidVortex, ensure that the following tools are installed:
    chmod +x VidVortex.sh
    ```
 
+   ### Installing `yt-dlp` and `ffmpeg`
+
+#### **For Windows**
+
+1. **Install `yt-dlp`**:
+   - **Download**: Go to the [yt-dlp releases page](https://github.com/yt-dlp/yt-dlp/releases/latest) and download the `yt-dlp.exe` file.
+   - **Move to a Folder**: Place the downloaded `yt-dlp.exe` file in a folder (e.g., `C:\yt-dlp\`).
+   - **Add to PATH**:
+     - Right-click on `This PC` or `Computer` and select `Properties`.
+     - Click on `Advanced system settings` on the left.
+     - Click `Environment Variables`.
+     - Under `System variables`, find the `Path` variable, select it, and click `Edit`.
+     - Click `New` and add the path where you placed `yt-dlp.exe` (e.g., `C:\yt-dlp\`).
+     - Click `OK` to close all windows.
+
+2. **Install `ffmpeg`**:
+   - **Download**: Go to the [ffmpeg.org download page](https://ffmpeg.org/download.html) and download the Windows build.
+   - **Extract**: Unzip the downloaded file to a folder (e.g., `C:\ffmpeg\`).
+   - **Add to PATH**:
+     - Follow the same steps as above to open `Environment Variables`.
+     - Add the `bin` directory inside the `ffmpeg` folder to the `Path` variable (e.g., `C:\ffmpeg\bin\`).
+     - Click `OK` to close all windows.
+
+#### **For macOS**
+
+1. **Install `Homebrew`** (if you don’t have it):
+   - Open Terminal and run:
+     ```bash
+     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+     ```
+
+2. **Install `yt-dlp`**:
+   - In Terminal, run:
+     ```bash
+     brew install yt-dlp
+     ```
+
+3. **Install `ffmpeg`**:
+   - In Terminal, run:
+     ```bash
+     brew install ffmpeg
+     ```
+
+#### **For Linux**
+
+1. **Install `yt-dlp`**:
+   - **Using pip**:
+     - Open Terminal and run:
+       ```bash
+       python3 -m pip install -U yt-dlp
+       ```
+   - **Using your package manager**:
+     - On Ubuntu/Debian:
+       ```bash
+       sudo apt update
+       sudo apt install yt-dlp
+       ```
+     - On Fedora:
+       ```bash
+       sudo dnf install yt-dlp
+       ```
+
+2. **Install `ffmpeg`**:
+   - On Ubuntu/Debian:
+     ```bash
+     sudo apt update
+     sudo apt install ffmpeg
+     ```
+   - On Fedora:
+     ```bash
+     sudo dnf install ffmpeg
+     ```
+
+### Verify Installation
+
+After installing, you can verify that both `yt-dlp` and `ffmpeg` are correctly installed by opening your terminal or command prompt and running:
+
+```bash
+yt-dlp --version
+ffmpeg -version
+```
+
+If both commands return version information, the installations were successful.
+
 ## Usage
 
 1. **Run the Script**:
