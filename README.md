@@ -72,5 +72,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Usage**: Instructions on how to use the script.
 - **Troubleshooting**: Common issues and solutions.
 - **Contributing**: Encourages contributions and provides a license.
-
-This README should help users understand what VidVortex is, how to set it up, and how to use it effectively. Feel free to customize it further based on your preferences!
