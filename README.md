@@ -43,19 +43,7 @@ Before using VidVortex, ensure that the following tools are installed:
 
 2. **ffmpeg**:
    - Install via your package manager, e.g., `sudo apt install ffmpeg`.
-
-## Installation
-
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/yourusername/VidVortex.git
-   cd VidVortex
-   ```
-
-2. **Make the Script Executable**:
-   ```bash
-   chmod +x VidVortex.sh
-   ```
+     
 
    ### Installing `yt-dlp` and `ffmpeg`
 
@@ -140,6 +128,19 @@ ffmpeg -version
 ```
 
 If both commands return version information, the installations were successful.
+
+## Installation
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/yourusername/VidVortex.git
+   cd VidVortex
+   ```
+
+2. **Make the Script Executable**:
+   ```bash
+   chmod +x VidVortex.sh
+   ```
 
 ## Usage
 
