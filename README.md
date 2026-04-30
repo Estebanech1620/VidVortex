@@ -219,4 +219,4 @@ Downloads are on **[GitHub Releases](https://github.com/Estebanech1620/VidVortex
 
 ## License
 
-MIT
+**Proprietary — all rights reserved.** See [`LICENSE`](LICENSE). You may not use, copy, modify, or distribute the contents of this repository without written permission from the copyright holder.
