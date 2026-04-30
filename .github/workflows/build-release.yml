@@ -11,26 +11,43 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: windows-latest
+          # archive_kind: skip = zip produced inside build_cmd (Windows), else linux/macos archive steps run
+          - runner: windows-latest
             artifact_name: VidVortex-windows
             upload_path: dist/VidVortex-windows.zip
             build_cmd: powershell -ExecutionPolicy Bypass -File scripts/build_windows.ps1
-          - os: ubuntu-latest
+            archive_kind: skip
+
+          - runner: ubuntu-latest
             artifact_name: VidVortex-linux
             executable_path: dist/linux/VidVortex
             archive_name: VidVortex-linux.zip
             package_dir: package/linux
             upload_path: VidVortex-linux.zip
             build_cmd: bash scripts/build_linux.sh
-          - os: macos-latest
-            artifact_name: VidVortex-macos
-            executable_path: dist/macos/VidVortex
-            archive_name: VidVortex-macos.zip
-            package_dir: package/macos
-            upload_path: VidVortex-macos.zip
-            build_cmd: bash scripts/build_macos.sh
+            archive_kind: linux
 
-    runs-on: ${{ matrix.os }}
+          # Apple Silicon (arm64) — see actions/runner-images README (macos-15 arm64)
+          - runner: macos-15
+            artifact_name: VidVortex-macos-arm64
+            executable_path: dist/macos/VidVortex
+            archive_name: VidVortex-macos-arm64.zip
+            package_dir: package/macos-arm64
+            upload_path: VidVortex-macos-arm64.zip
+            build_cmd: bash scripts/build_macos.sh
+            archive_kind: macos
+
+          # Intel (x86_64)
+          - runner: macos-15-intel
+            artifact_name: VidVortex-macos-intel
+            executable_path: dist/macos/VidVortex
+            archive_name: VidVortex-macos-intel.zip
+            package_dir: package/macos-intel
+            upload_path: VidVortex-macos-intel.zip
+            build_cmd: bash scripts/build_macos.sh
+            archive_kind: macos
+
+    runs-on: ${{ matrix.runner }}
 
     steps:
       - name: Checkout
@@ -46,7 +63,7 @@ jobs:
         run: ${{ matrix.build_cmd }}
 
       - name: Archive package (Linux)
-        if: runner.os == 'Linux'
+        if: matrix.archive_kind == 'linux'
         shell: bash
         run: |
           mkdir -p "${{ matrix.package_dir }}"
@@ -57,7 +74,7 @@ jobs:
           (cd "${{ matrix.package_dir }}" && zip -r "../../${{ matrix.archive_name }}" .)
 
       - name: Archive package (macOS)
-        if: runner.os == 'macOS'
+        if: matrix.archive_kind == 'macos'
         shell: bash
         run: |
           mkdir -p "${{ matrix.package_dir }}"

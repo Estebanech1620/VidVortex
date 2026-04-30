@@ -25,17 +25,26 @@ Download audio or video from a URL with a simple desktop app.
 
 ## Download And Run (macOS)
 
-1. Download `VidVortex-macos.zip` from Releases
-2. Extract the zip (double-click it in Finder)
-3. Open the extracted folder and double-click `RUN_FIRST.command`
-4. If macOS blocks first launch, open **System Settings → Privacy & Security**, approve VidVortex, then double-click `RUN_FIRST.command` again
-5. On first run, follow any installer prompts (Python, yt-dlp, ffmpeg via Homebrew)
+There are **two** release zips—pick the one that matches your Mac:
+
+| Your Mac | Download from Releases |
+|----------|-------------------------|
+| **Apple Silicon** (M1 / M2 / M3 / M4 or later) | `VidVortex-macos-arm64.zip` |
+| **Intel** (older Macs) | `VidVortex-macos-intel.zip` |
+
+Steps:
+
+1. Download the correct zip for your CPU (see **About This Mac** → Chip / Processor).
+2. Extract the zip (double-click it in Finder).
+3. Open the extracted folder and double-click `RUN_FIRST.command`.
+4. If macOS blocks first launch, open **System Settings → Privacy & Security**, approve VidVortex, then double-click `RUN_FIRST.command` again.
+5. On first run, follow any installer prompts (Python, yt-dlp, ffmpeg via Homebrew).
 
 Note: macOS may open a short setup window while installers run. You should not need to type commands yourself.
 
 **Release zip notes (macOS):**
 
-- **Architecture:** Builds from [GitHub Actions](https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners) use **macOS Apple Silicon** runners, so `VidVortex` in the zip is typically **arm64** only. It runs natively on Apple Silicon Macs; **Intel Macs** need a build produced on Intel/`x86_64` (for example build locally with `scripts/build_macos.sh`)—a generic arm64 binary will not run there.
+- **Architecture:** CI builds **arm64** on [`macos-15`](https://github.com/actions/runner-images/blob/main/README.md) and **x86_64** on `macos-15-intel`, so each zip matches one CPU family. Rosetta does **not** run an arm64 app on Intel (and you normally use the Intel zip on Intel Macs).
 - **Gatekeeper:** Downloads are usually **not notarized**. If macOS blocks the app, use **System Settings → Privacy & Security** as above, or **Control-click → Open** on `VidVortex` or `RUN_FIRST.command` the first time. Safari/Chrome may mark the folder with quarantine; that is normal for unsigned zips.
 - **Setup script:** `setup_macos.sh` requires **[Homebrew](https://brew.sh)**. Users without Homebrew must install it before first run (the script exits with a clear error otherwise).
 
