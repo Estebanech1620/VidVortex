@@ -15,47 +15,65 @@ jobs:
     strategy:
       matrix:
         include:
+          # Application Python source is cloned from VidVortex_Source into ./app for each job.
           # archive_kind: skip = zip produced inside build_cmd (Windows), else linux/macos archive steps run
           - runner: windows-latest
             artifact_name: VidVortex-windows
-            upload_path: dist/VidVortex-windows.zip
-            build_cmd: powershell -ExecutionPolicy Bypass -File scripts/build_windows.ps1
+            upload_path: app/dist/VidVortex-windows.zip
+            build_cmd: powershell -ExecutionPolicy Bypass -File app/scripts/build_windows.ps1
             archive_kind: skip
 
           - runner: ubuntu-latest
             artifact_name: VidVortex-linux
-            executable_path: dist/linux/VidVortex
+            executable_path: app/dist/linux/VidVortex
             archive_name: VidVortex-linux.zip
             package_dir: package/linux
             upload_path: VidVortex-linux.zip
-            build_cmd: bash scripts/build_linux.sh
+            build_cmd: bash app/scripts/build_linux.sh
             archive_kind: linux
 
-          # Apple Silicon (arm64) — see actions/runner-images README (macos-15 arm64)
+          # Apple Silicon (arm64)
           - runner: macos-15
             artifact_name: VidVortex-macos-arm64
-            executable_path: dist/macos/VidVortex
+            executable_path: app/dist/macos/VidVortex
             archive_name: VidVortex-macos-arm64.zip
             package_dir: package/macos-arm64
             upload_path: VidVortex-macos-arm64.zip
-            build_cmd: bash scripts/build_macos.sh
+            build_cmd: bash app/scripts/build_macos.sh
             archive_kind: macos
 
           # Intel (x86_64)
           - runner: macos-15-intel
             artifact_name: VidVortex-macos-intel
-            executable_path: dist/macos/VidVortex
+            executable_path: app/dist/macos/VidVortex
             archive_name: VidVortex-macos-intel.zip
             package_dir: package/macos-intel
             upload_path: VidVortex-macos-intel.zip
-            build_cmd: bash scripts/build_macos.sh
+            build_cmd: bash app/scripts/build_macos.sh
             archive_kind: macos
 
     runs-on: ${{ matrix.runner }}
 
     steps:
-      - name: Checkout
+      - name: Checkout distribution repo (packaging only)
         uses: actions/checkout@v4
+
+      - name: Checkout application source
+        uses: actions/checkout@v4
+        with:
+          repository: Estebanech1620/VidVortex_Source
+          path: app
+
+      - name: Overlay CI packaging scripts and release helpers
+        shell: bash
+        run: |
+          mkdir -p app/scripts app/release
+          cp -R scripts/. app/scripts/
+          cp -R release/. app/release/
+
+      - name: Verify application entrypoint
+        shell: bash
+        run: test -f app/vidvortex_app.py
 
       - name: Set up Python
         uses: actions/setup-python@v5

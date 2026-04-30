@@ -75,46 +75,29 @@ Each OS zip includes:
 
 ---
 
-## Build the Windows release zip (maintainers)
+## Build release zips locally (maintainers)
 
-From the repo root (same steps GitHub Actions uses):
+CI clones **[VidVortex_Source](https://github.com/Estebanech1620/VidVortex_Source)**, copies this repo’s **`scripts/`** and **`release/`** into that tree, then builds (same as overlay in Actions).
+
+**On your machine:** clone **VidVortex_Source**, copy **`scripts`** and **`release`** from this (**VidVortex**) repo into that clone so paths match CI, `cd` into the Source clone, then:
 
 ```bat
 powershell -ExecutionPolicy Bypass -File scripts\build_windows.ps1
 ```
 
-This rebuilds `dist\windows\VidVortex.exe` and writes **`dist\VidVortex-windows.zip`** (`VidVortex.exe`, `setup_windows.bat`). Upload that zip to GitHub Releases.
-
-From source, developers use **`build_app.bat`** (outputs `app\VidVortex.exe`), not a RUN_FIRST script.
+That writes **`dist\VidVortex-windows.zip`** (and `dist\windows\VidVortex.exe`). Linux/macOS: `bash scripts/build_linux.sh` or `bash scripts/build_macos.sh`.
 
 ---
 
-## Open The App (build from this repo on Windows)
+## Open The App (build from source)
 
-1. Double-click `build_app.bat`
-2. Wait until it finishes
-3. Open the `app` folder
-4. Double-click `VidVortex.exe`
-
----
-
-## Open The App (macOS / Linux from source)
-
-1. Open your VidVortex project folder
-2. Build/package the app for that OS (see project scripts or PyInstaller specs)
-3. Open the output app folder
-4. Launch the VidVortex app
-5. If needed, allow execution in Security settings or file permissions
+Development and local builds use **[VidVortex_Source](https://github.com/Estebanech1620/VidVortex_Source)** — for example **`build_app.bat`** on Windows (outputs under `app\`), or **`scripts/build_macos.sh`** / **`scripts/build_linux.sh`** after copying packaging scripts from this repo if needed.
 
 ---
 
 ## App File Location
 
-After building on Windows, the app is here:
-
-- `app\VidVortex.exe`
-
-For macOS/Linux, the output app path depends on your packaging format.
+After building from **VidVortex_Source** with **`build_app.bat`** on Windows, the exe is typically **`app\VidVortex.exe`** inside that repo. PyInstaller output paths are described in **`scripts/build_*.sh`** and **`build_windows.ps1`**.
 
 ---
 
@@ -208,36 +191,27 @@ Release zips include setup scripts so dependencies can be installed when missing
 
 ---
 
-## Main Files
+## Repositories
 
-- `build_app.bat` — builds the app (Windows)
-- `app\VidVortex.exe` — app you open after a Windows build
-- `vidvortex_app.py` — app UI code
-- `vidvortex.py` — download engine
+| Repo | Purpose |
+|------|---------|
+| **[VidVortex](https://github.com/Estebanech1620/VidVortex)** (this page) | End-user README, release packaging scripts, CI that builds **zips from source pulled at build time**. No application source code in git. |
+| **[VidVortex_Source](https://github.com/Estebanech1620/VidVortex_Source)** | Full **Python source**, specs, icons, examples — clone here to develop or build locally. |
 
 ---
 
-## Git-Friendly Workflow
+## Maintainer / Git workflow
 
-Use this structure to keep the repo clean and easy to maintain:
-
-- Keep source files in version control (`vidvortex.py`, `vidvortex_app.py`, `build_app.bat`, docs)
-- Do not commit local build output folders or temporary artifacts
-- Write clear commit messages that explain the user-facing change
-- Keep README updates in the same commit as related behavior/UI changes
-- Tag stable versions before sharing builds so users can download known-good releases
-
-Suggested branch naming:
-
-- `feature/<short-name>`
-- `fix/<short-name>`
-- `docs/<short-name>`
+- Application code changes belong in **VidVortex_Source**.
+- This repo keeps **`.github/workflows`**, **`scripts/`** (PyInstaller + OS setup helpers), and **`release/`** (RUN_FIRST helpers). CI checks out Source into `app/` and overlays those dirs before building.
+- Tag **`v*`** here to run Actions and publish release assets.
+- Do not commit `vidvortex*.py`, `requirements-desktop.txt`, or build outputs into this repo (see `.gitignore`).
 
 ---
 
 ## On This Repository
 
-Prebuilt downloads are on **GitHub Releases** for the distribution repo. This repo tracks source aligned with [VidVortex_Source](https://github.com/Estebanech1620/VidVortex_Source).
+Downloads are on **[GitHub Releases](https://github.com/Estebanech1620/VidVortex/releases)**. **Source code is not stored in this git repository** — only [VidVortex_Source](https://github.com/Estebanech1620/VidVortex_Source).
 
 ---
 

@@ -7,3 +7,12 @@ app/VidVortex.exe
 build.log
 .DS_Store
 Thumbs.db
+
+# Application source and assets belong only in VidVortex_Source — never commit here
+/vidvortex*.py
+/requirements-desktop.txt
+/*.spec
+/build_app.bat
+/app_logo.ico
+/app_logo.png
+/*.example
