@@ -10,9 +10,5 @@ elif [[ -x /usr/local/bin/brew ]]; then
   eval "$(/usr/local/bin/brew shellenv)"
 fi
 
-echo "[VidVortex] Running first-time setup for macOS..."
-chmod +x ./setup_macos.sh ./VidVortex
-./setup_macos.sh
-
-echo "[VidVortex] Setup complete. Launching VidVortex..."
-./VidVortex
+chmod +x ./VidVortex 2>/dev/null || true
+exec ./VidVortex
