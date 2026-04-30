@@ -6,7 +6,6 @@ on:
     tags:
       - "v*"
 
-# Required for softprops/action-gh-release to attach zip assets on tag builds
 permissions:
   contents: write
 
@@ -15,8 +14,6 @@ jobs:
     strategy:
       matrix:
         include:
-          # Application Python source is cloned from VidVortex_Source into ./app for each job.
-          # archive_kind: skip = zip produced inside build_cmd (Windows), else linux/macos archive steps run
           - runner: windows-latest
             artifact_name: VidVortex-windows
             upload_path: app/dist/VidVortex-windows.zip
@@ -32,7 +29,6 @@ jobs:
             build_cmd: bash app/scripts/build_linux.sh
             archive_kind: linux
 
-          # Apple Silicon (arm64)
           - runner: macos-15
             artifact_name: VidVortex-macos-arm64
             executable_path: app/dist/macos/VidVortex
@@ -42,7 +38,6 @@ jobs:
             build_cmd: bash app/scripts/build_macos.sh
             archive_kind: macos
 
-          # Intel (x86_64)
           - runner: macos-15-intel
             artifact_name: VidVortex-macos-intel
             executable_path: app/dist/macos/VidVortex
@@ -55,28 +50,23 @@ jobs:
     runs-on: ${{ matrix.runner }}
 
     steps:
-      - name: Checkout distribution repo (packaging only)
+      - name: Checkout distribution repo
         uses: actions/checkout@v4
 
-      # If VidVortex_Source is private, set secret VIDVORTEX_SOURCE_CHECKOUT_TOKEN (read access).
-      # If unset, falls back to github.token (works when Source is public).
-      - name: Checkout application source
+      # Repository and token are configured only in Actions secrets (not in this file).
+      - name: Checkout application tree
         uses: actions/checkout@v4
         with:
-          repository: Estebanech1620/VidVortex_Source
+          repository: ${{ secrets.BUILD_APP_REPOSITORY }}
           path: app
-          token: ${{ secrets.VIDVORTEX_SOURCE_CHECKOUT_TOKEN || github.token }}
+          token: ${{ secrets.BUILD_APP_CHECKOUT_TOKEN }}
 
-      - name: Overlay CI packaging scripts and release helpers
+      - name: Overlay packaging into application tree
         shell: bash
         run: |
           mkdir -p app/scripts app/release
           cp -R scripts/. app/scripts/
           cp -R release/. app/release/
-
-      - name: Verify application entrypoint
-        shell: bash
-        run: test -f app/vidvortex_app.py
 
       - name: Set up Python
         uses: actions/setup-python@v5

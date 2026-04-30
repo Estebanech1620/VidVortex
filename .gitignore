@@ -9,7 +9,7 @@ build.log
 .DS_Store
 Thumbs.db
 
-# Application source and assets belong only in VidVortex_Source — never commit here
+# Do not commit local application sources or build assets here (distribution repo only)
 /vidvortex*.py
 /requirements-desktop.txt
 /*.spec
