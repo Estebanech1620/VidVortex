@@ -11,8 +11,8 @@ elif [[ -x /usr/local/bin/brew ]]; then
 fi
 
 echo "[VidVortex] Running first-time setup for macOS..."
-chmod +x ./setup_macos.sh ./VidVortex
+chmod +x ./setup_macos.sh ./VidVortex.command ./VidVortex.bin
 ./setup_macos.sh
 
 echo "[VidVortex] Setup complete. Launching VidVortex..."
-./VidVortex
+exec ./VidVortex.command

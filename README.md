@@ -45,7 +45,7 @@ Steps:
 3. Open the folder and double-click **`RUN_FIRST.command`**
 4. If macOS blocks the first launch, follow **[If macOS blocks VidVortex (security popup)](#if-macos-blocks-vidvortex-security-popup)** below, then try **`RUN_FIRST.command`** again
 5. On first run, follow any prompts to install dependencies (Python, yt-dlp, ffmpeg via Homebrew)
-6. **After setup**, open the app with **`Launch_VidVortex.command`** each time (double-click it in the same folder). That puts **Homebrew’s `yt-dlp` and `ffmpeg` on `PATH`** for VidVortex. If you only double-click the plain **`VidVortex`** binary from Finder, macOS often gives the app a **tiny `PATH`**, so it may pick up an **old pip-installed yt-dlp** or fail to run downloads—this looks like “nothing works” even when cookies and Homebrew are fine.
+6. **After setup**, open the app with **`VidVortex.command`** every time (double-click it in the same folder). It loads Homebrew’s **`PATH`** then starts **`VidVortex.bin`** (the actual program). **Do not** double-click **`VidVortex.bin`** from Finder—macOS gives it almost no **`PATH`**, so downloads often fail even when Homebrew’s **`yt-dlp`** works in Terminal.
 
 #### If macOS blocks VidVortex (security popup)
 
@@ -57,11 +57,11 @@ Do this:
 2. In the sidebar, click **Privacy & Security**.
 3. Scroll down to the **Security** section.
 4. Look for a message about **VidVortex** (or “was blocked”) and click **Open Anyway**. Enter your Mac password if macOS asks.
-5. Open **`RUN_FIRST.command`** or **`VidVortex`** again.
+5. Open **`RUN_FIRST.command`** or **`VidVortex.command`** again.
 
 If there is no **Open Anyway** button yet:
 
-- **Control-click** (right-click) **`VidVortex`** or **`RUN_FIRST.command`** in Finder → **Open** → click **Open** in the dialog to confirm, **or**
+- **Control-click** (right-click) **`VidVortex.command`** or **`RUN_FIRST.command`** in Finder → **Open** → click **Open** in the dialog to confirm, **or**
 - Try double-clicking once more after step 4 so macOS registers your choice.
 
 **Notes**
@@ -84,9 +84,9 @@ If there is no **Open Anyway** button yet:
 
 ## What’s in each zip
 
-- The **VidVortex** app (`.exe` on Windows, named **`VidVortex`** on macOS and Linux)
+- The **VidVortex** app (`.exe` on Windows; on macOS **`VidVortex.bin`** opened via **`VidVortex.command`**; **`VidVortex`** executable on Linux)
 - A **setup** script for that system (`setup_windows.bat`, `setup_macos.sh`, or `setup_linux.sh`)
-- On **macOS**: **`RUN_FIRST.command`** (setup + launch), **`Launch_VidVortex.command`** (launch later with correct **`PATH`** for Homebrew tools), and **`setup_macos.sh`**. On **Linux**, a **first-run launcher** so setup runs before the app. **Windows** has no launcher—run **`setup_windows.bat`**, then **`VidVortex.exe`**.
+- On **macOS**: **`RUN_FIRST.command`** (first-time setup + launch), **`VidVortex.command`** (daily launcher—the **`.bin`** file is only the built executable), and **`setup_macos.sh`**. On **Linux**, a **first-run launcher** so setup runs before the app. **Windows** has no launcher—run **`setup_windows.bat`**, then **`VidVortex.exe`**.
 
 ---
 
@@ -121,8 +121,8 @@ These patterns match what **yt-dlp** users report on Mac when **Browser for YouT
    1. **Apple menu** → **System Settings**
    2. **Privacy & Security** → **Full Disk Access**
    3. Click the **lock** icon if needed and enter your password so you can change settings
-   4. Click **+**, find your **`VidVortex`** app in the folder where you extracted the zip, select it, then click **Open**
-   5. Turn **on** the switch next to **VidVortex**
+   4. Click **+**, select **`VidVortex.bin`** in the folder where you extracted the zip (that is the running executable), then click **Open**
+   5. Turn **on** the switch next to **VidVortex** / **`VidVortex.bin`**
    6. **Quit VidVortex completely** (VidVortex menu → Quit, not only closing the window), then open it again  
    *(If you run yt-dlp from **Terminal** instead of the app, add **Terminal** or **iTerm** here the same way.)*
 
@@ -175,7 +175,7 @@ The included setup scripts install these when they are missing and **refresh yt-
 4. Make sure **yt-dlp** and **ffmpeg** are installed and up to date
 5. On **YouTube**, use **Browser for YouTube** or the **YouTube cookies** tab if you see sign-in or bot errors (on **macOS**, try **Firefox** first and see **macOS and YouTube cookies** above)
 6. On **macOS**, if the app or **`RUN_FIRST.command`** won’t run and you see a security warning, follow **[If macOS blocks VidVortex (security popup)](#if-macos-blocks-vidvortex-security-popup)** above
-7. On **macOS**, if qualities fail or downloads never start but **`yt-dlp -F`** works in Terminal, use **`Launch_VidVortex.command`** (or open **`VidVortex`** only from a Terminal session after `eval "$(brew shellenv)"`) so the app sees Homebrew’s **yt-dlp**
+7. On **macOS**, if qualities fail or downloads never start but **`yt-dlp -F`** works in Terminal, always open **`VidVortex.command`** (not **`VidVortex.bin`**), or run **`VidVortex.bin`** only from Terminal after **`eval "$(brew shellenv)"`**
 
 ---
 

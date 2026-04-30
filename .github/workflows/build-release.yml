@@ -107,11 +107,11 @@ jobs:
         shell: bash
         run: |
           mkdir -p "${{ matrix.package_dir }}"
-          cp "${{ matrix.executable_path }}" "${{ matrix.package_dir }}/VidVortex"
+          cp "${{ matrix.executable_path }}" "${{ matrix.package_dir }}/VidVortex.bin"
           cp "scripts/setup_macos.sh" "${{ matrix.package_dir }}/setup_macos.sh"
           cp "release/RUN_FIRST.command" "${{ matrix.package_dir }}/RUN_FIRST.command"
-          cp "release/Launch_VidVortex.command" "${{ matrix.package_dir }}/Launch_VidVortex.command"
-          chmod +x "${{ matrix.package_dir }}/VidVortex" "${{ matrix.package_dir }}/setup_macos.sh" "${{ matrix.package_dir }}/RUN_FIRST.command" "${{ matrix.package_dir }}/Launch_VidVortex.command"
+          cp "release/VidVortex.command" "${{ matrix.package_dir }}/VidVortex.command"
+          chmod +x "${{ matrix.package_dir }}/VidVortex.bin" "${{ matrix.package_dir }}/setup_macos.sh" "${{ matrix.package_dir }}/RUN_FIRST.command" "${{ matrix.package_dir }}/VidVortex.command"
           (cd "${{ matrix.package_dir }}" && zip -r "../../${{ matrix.archive_name }}" .)
 
       - name: Upload build artifact
