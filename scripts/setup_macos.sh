@@ -34,11 +34,17 @@ if [[ ! -w "$BREW_PREFIX" ]]; then
   echo "[Error] Homebrew’s install folder is not writable by your user:" >&2
   echo "        $BREW_PREFIX" >&2
   echo "" >&2
-  echo "This usually happens if brew was run with sudo or ownership changed." >&2
-  echo "Fix ownership (run once in Terminal, replace user if needed):" >&2
-  echo "        sudo chown -R \"$(whoami)\" \"$BREW_PREFIX\"" >&2
+  echo "Common after: sudo brew / mixed admin install. Fix ownership once in Terminal:" >&2
   echo "" >&2
-  echo "Then run RUN_FIRST.command again." >&2
+  echo "    sudo chown -R \"$(whoami)\" \"$BREW_PREFIX\"" >&2
+  echo "" >&2
+  echo "If brew is broken on PATH, try (Apple Silicon):" >&2
+  echo "    sudo chown -R \"$(whoami)\" /opt/homebrew" >&2
+  echo "Or (many Intel Macs):" >&2
+  echo "    sudo chown -R \"$(whoami)\" /usr/local" >&2
+  echo "" >&2
+  echo "Enter your Mac password when asked; then run RUN_FIRST.command again." >&2
+  echo "(Do not put sudo commands in ~/.zprofile — this is a one-time fix.)" >&2
   exit 1
 fi
 

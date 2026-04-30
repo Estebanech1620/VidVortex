@@ -67,8 +67,33 @@ If there is no **Open Anyway** button yet:
 **Notes**
 
 - **Homebrew** is installed automatically on first setup if it isn’t already there (official installer). You still need **internet**; macOS may prompt for **Command Line Tools** or your **password**. If auto-install fails, install manually from [brew.sh](https://brew.sh).
-- If setup prints **`/opt/homebrew is not writable`** (or similar), Homebrew’s folder is owned by the wrong user—often after using **`sudo brew`**. Fix once in Terminal: **`sudo chown -R "$(whoami)" "$(brew --prefix)"`**, then run **`RUN_FIRST.command`** again.
 - Use the **Intel** zip only on Intel Macs and the **Apple Silicon** zip only on Apple Silicon Macs.
+
+#### Homebrew not writable (chown fix)
+
+If setup stops with **`/opt/homebrew is not writable`**, **`brew update` Permission denied**, or VidVortex prints the same **`chown`** hint, Homebrew’s folder is owned by the wrong user (often after **`sudo brew`**).
+
+Do this **once** in **Terminal** — **not** in `~/.zprofile` or `~/.zshrc` (never auto-run `sudo` from your shell profile):
+
+1. Prefer this if **`brew`** works:
+
+```bash
+sudo chown -R "$(whoami)" "$(brew --prefix)"
+```
+
+2. If **`brew`** isn’t on your PATH yet, **Apple Silicon** (M1+):
+
+```bash
+sudo chown -R "$(whoami)" /opt/homebrew
+```
+
+3. Many **Intel** Macs:
+
+```bash
+sudo chown -R "$(whoami)" /usr/local
+```
+
+Enter your Mac password when prompted (the cursor won’t move — that’s normal). Then run **`RUN_FIRST.command`** again.
 
 ---
 
@@ -176,6 +201,7 @@ The included setup scripts install these when they are missing and **keep them c
 5. On **YouTube**, use **Browser for YouTube** or the **YouTube cookies** tab if you see sign-in or bot errors (on **macOS**, try **Firefox** first and see **macOS and YouTube cookies** above)
 6. On **macOS**, if the app or **`RUN_FIRST.command`** won’t run and you see a security warning, follow **[If macOS blocks VidVortex (security popup)](#if-macos-blocks-vidvortex-security-popup)** above
 7. On **macOS**, if qualities fail or downloads never start but **`yt-dlp -F`** works in Terminal, always open **`VidVortex.command`** (not **`VidVortex.bin`**), or run **`VidVortex.bin`** only from Terminal after **`eval "$(brew shellenv)"`**
+8. On **macOS**, if setup says **`/opt/homebrew is not writable`** or **`brew`** cannot update, see **[Homebrew not writable (chown fix)](#homebrew-not-writable-chown-fix)** above
 
 ---
 
