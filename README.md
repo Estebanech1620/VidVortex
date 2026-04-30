@@ -44,7 +44,7 @@ Steps:
 2. Extract it (double-click the zip in Finder)
 3. Open the folder and double-click **`RUN_FIRST.command`**
 4. If macOS blocks the first launch, follow **[If macOS blocks VidVortex (security popup)](#if-macos-blocks-vidvortex-security-popup)** below, then try **`RUN_FIRST.command`** again
-5. On first run, follow any prompts to install dependencies (Python, yt-dlp, ffmpeg via Homebrew)
+5. On first run, **`RUN_FIRST.command`** installs **Homebrew** if needed, then **Python**, **yt-dlp**, and **ffmpeg**, and refreshes them so builds stay current (needs **internet**; macOS may ask for your **password** / **Command Line Tools**)
 6. **After setup**, open the app with **`VidVortex.command`** every time (double-click it in the same folder). It loads Homebrew’s **`PATH`** then starts **`VidVortex.bin`** (the actual program). **Do not** double-click **`VidVortex.bin`** from Finder—macOS gives it almost no **`PATH`**, so downloads often fail even when Homebrew’s **`yt-dlp`** works in Terminal.
 
 #### If macOS blocks VidVortex (security popup)
@@ -66,7 +66,7 @@ If there is no **Open Anyway** button yet:
 
 **Notes**
 
-- **Homebrew** is required for the macOS setup step. If you do not have it, install it from [brew.sh](https://brew.sh) first.
+- **Homebrew** is installed automatically on first setup if it isn’t already there (official installer). You still need **internet**; macOS may prompt for **Command Line Tools** or your **password**. If auto-install fails, install manually from [brew.sh](https://brew.sh).
 - If setup prints **`/opt/homebrew is not writable`** (or similar), Homebrew’s folder is owned by the wrong user—often after using **`sudo brew`**. Fix once in Terminal: **`sudo chown -R "$(whoami)" "$(brew --prefix)"`**, then run **`RUN_FIRST.command`** again.
 - Use the **Intel** zip only on Intel Macs and the **Apple Silicon** zip only on Apple Silicon Macs.
 
@@ -163,7 +163,7 @@ The app relies on:
 - **yt-dlp**
 - **ffmpeg**
 
-The included setup scripts install these when they are missing and **refresh yt-dlp** on each run (via Homebrew, your Linux package manager, or winget/choco/scoop on Windows) so YouTube breakage from stale yt-dlp is less likely.
+The included setup scripts install these when they are missing and **keep them current**: **macOS** installs **Homebrew** automatically if needed, then refreshes **Python**, **yt-dlp**, and **ffmpeg** on each **`RUN_FIRST.command`**; **Linux** uses your distro packages; **Windows** uses winget/choco/scoop when available.
 
 ---
 
