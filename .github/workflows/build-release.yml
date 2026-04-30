@@ -20,12 +20,14 @@ jobs:
       matrix:
         include:
           - runner: windows-latest
+            build_shell: pwsh
             artifact_name: VidVortex-windows
             upload_path: app/dist/VidVortex-windows.zip
             build_cmd: ./app/scripts/build_windows.ps1
             archive_kind: skip
 
           - runner: ubuntu-latest
+            build_shell: bash
             artifact_name: VidVortex-linux
             executable_path: app/dist/linux/VidVortex
             archive_name: VidVortex-linux.zip
@@ -35,6 +37,7 @@ jobs:
             archive_kind: linux
 
           - runner: macos-15
+            build_shell: bash
             artifact_name: VidVortex-macos-arm64
             executable_path: app/dist/macos/VidVortex
             archive_name: VidVortex-macos-arm64.zip
@@ -44,6 +47,7 @@ jobs:
             archive_kind: macos
 
           - runner: macos-15-intel
+            build_shell: bash
             artifact_name: VidVortex-macos-intel
             executable_path: app/dist/macos/VidVortex
             archive_name: VidVortex-macos-intel.zip
@@ -93,7 +97,7 @@ jobs:
           python-version: "3.12"
 
       - name: Build package
-        shell: ${{ matrix.runner == 'windows-latest' && 'pwsh' || 'bash' }}
+        shell: ${{ matrix.build_shell }}
         run: ${{ matrix.build_cmd }}
 
       - name: Archive package (Linux)
