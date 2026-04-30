@@ -1,0 +1,80 @@
+name: Build Cross-Platform Packages
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            artifact_name: VidVortex-windows
+            upload_path: dist/VidVortex-windows.zip
+            build_cmd: powershell -ExecutionPolicy Bypass -File scripts/build_windows.ps1
+          - os: ubuntu-latest
+            artifact_name: VidVortex-linux
+            executable_path: dist/linux/VidVortex
+            archive_name: VidVortex-linux.zip
+            package_dir: package/linux
+            upload_path: VidVortex-linux.zip
+            build_cmd: bash scripts/build_linux.sh
+          - os: macos-latest
+            artifact_name: VidVortex-macos
+            executable_path: dist/macos/VidVortex
+            archive_name: VidVortex-macos.zip
+            package_dir: package/macos
+            upload_path: VidVortex-macos.zip
+            build_cmd: bash scripts/build_macos.sh
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build package
+        shell: bash
+        run: ${{ matrix.build_cmd }}
+
+      - name: Archive package (Linux)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          mkdir -p "${{ matrix.package_dir }}"
+          cp "${{ matrix.executable_path }}" "${{ matrix.package_dir }}/VidVortex"
+          cp "scripts/setup_linux.sh" "${{ matrix.package_dir }}/setup_linux.sh"
+          cp "release/RUN_FIRST_LINUX.sh" "${{ matrix.package_dir }}/RUN_FIRST.sh"
+          chmod +x "${{ matrix.package_dir }}/VidVortex" "${{ matrix.package_dir }}/setup_linux.sh" "${{ matrix.package_dir }}/RUN_FIRST.sh"
+          (cd "${{ matrix.package_dir }}" && zip -r "../../${{ matrix.archive_name }}" .)
+
+      - name: Archive package (macOS)
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          mkdir -p "${{ matrix.package_dir }}"
+          cp "${{ matrix.executable_path }}" "${{ matrix.package_dir }}/VidVortex"
+          cp "scripts/setup_macos.sh" "${{ matrix.package_dir }}/setup_macos.sh"
+          cp "release/RUN_FIRST_MACOS.sh" "${{ matrix.package_dir }}/RUN_FIRST.sh"
+          chmod +x "${{ matrix.package_dir }}/VidVortex" "${{ matrix.package_dir }}/setup_macos.sh" "${{ matrix.package_dir }}/RUN_FIRST.sh"
+          (cd "${{ matrix.package_dir }}" && zip -r "../../${{ matrix.archive_name }}" .)
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.upload_path }}
+
+      - name: Upload release asset
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ matrix.upload_path }}

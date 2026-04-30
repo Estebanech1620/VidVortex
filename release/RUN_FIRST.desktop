@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=VidVortex (first run)
+Comment=Install dependencies if needed and launch VidVortex
+Exec=sh -c 'cd "$(dirname "$1")" && chmod +x ./RUN_FIRST.sh ./setup_linux.sh ./VidVortex 2>/dev/null; exec ./RUN_FIRST.sh' _ %k
+Terminal=false
+Categories=AudioVideo;
+StartupNotify=true

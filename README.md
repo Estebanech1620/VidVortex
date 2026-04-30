@@ -52,11 +52,25 @@ Note: Some distributions hide `.desktop` launches behind one approval click the 
 Each OS zip includes:
 
 - Main app executable (`VidVortex.exe` or `VidVortex`)
-- Launch helper (`RUN_FIRST.command` on macOS; `RUN_FIRST.desktop` on Linux)
 - Dependency installer for that OS:
   - `setup_windows.bat`
   - `setup_linux.sh`
   - `setup_macos.sh`
+- **macOS / Linux only:** a launch helper (`RUN_FIRST.command`, `RUN_FIRST.desktop`, or `RUN_FIRST.sh`) that runs setup and starts the app. **Windows** does not ship a launcher in the zip—run `setup_windows.bat`, then `VidVortex.exe`.
+
+---
+
+## Build the Windows release zip (maintainers)
+
+From the repo root (same steps GitHub Actions uses):
+
+```bat
+powershell -ExecutionPolicy Bypass -File scripts\build_windows.ps1
+```
+
+This rebuilds `dist\windows\VidVortex.exe` and writes **`dist\VidVortex-windows.zip`** (`VidVortex.exe`, `setup_windows.bat`). Upload that zip to GitHub Releases.
+
+From source, developers use **`build_app.bat`** (outputs `app\VidVortex.exe`), not a RUN_FIRST script.
 
 ---
 
