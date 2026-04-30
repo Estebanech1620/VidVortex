@@ -1,173 +1,172 @@
-# VidVortex
+﻿# VidVortex
 
-**VidVortex** is a powerful, cross-platform Bash script that makes it easy to download and merge YouTube videos and audio in the highest quality. It works seamlessly on Windows, Linux, and macOS.
+Download audio or video from a URL with a simple desktop app.
 
-## Features
+## What This App Does
 
-- **Cross-Platform**: Runs on Windows, Linux, and macOS.
-- **High-Quality Downloads**: Prioritizes 4K resolution or higher. If the best available resolution is less than 1080p, it prompts you before proceeding.
-- **Automatic Merging**: Merges downloaded video and audio into a single file using `ffmpeg`.
-- **Simple Setup**: Automatically creates a "Video Downloads" folder on your desktop, where all files are processed.
+- Paste a URL
+- Choose **Video** or **Audio** (Video is the default mode)
+- Click **Load Qualities**
+- Keep **Best Available** or choose a specific quality
+- Save output to:
+  - `VidVortex/audio`
+  - `VidVortex/video`
 
-## Requirements
+---
 
-Before using VidVortex, ensure that the following tools are installed:
+## Open The App (Windows)
 
-- **yt-dlp**: A YouTube downloader that supports a wide variety of sites. [Install instructions](https://github.com/yt-dlp/yt-dlp#installation)
-- **ffmpeg**: A tool to process and merge video/audio files. [Install instructions](https://ffmpeg.org/download.html)
+1. Double-click `build_app.bat`
+2. Wait until it finishes
+3. Open the `app` folder
+4. Double-click `VidVortex.exe`
 
-### Installation of Dependencies
+---
 
-#### Windows
+## Open The App (macOS)
 
-1. **yt-dlp**: 
-   - Download the `yt-dlp.exe` from the [official releases page](https://github.com/yt-dlp/yt-dlp/releases/latest).
-   - Add the directory containing `yt-dlp.exe` to your system's PATH.
+1. Open your VidVortex project folder
+2. Build/package the macOS app version
+3. Open the output app folder
+4. Double-click the VidVortex app
+5. If macOS blocks first launch, allow it in Security & Privacy and open again
 
-2. **ffmpeg**:
-   - Download `ffmpeg` from [ffmpeg.org](https://ffmpeg.org/download.html).
-   - Extract the files and add the `bin` directory containing `ffmpeg.exe` to your system's PATH.
+---
 
-#### macOS
+## Open The App (Linux)
 
-1. **yt-dlp**:
-   - Install via Homebrew: `brew install yt-dlp`
+1. Open your VidVortex project folder
+2. Build/package the Linux app version
+3. Open the output app folder
+4. Launch the VidVortex app file
+5. If needed, allow execution permissions in your file manager
 
-2. **ffmpeg**:
-   - Install via Homebrew: `brew install ffmpeg`
+---
 
-#### Linux
+## App File Location
 
-1. **yt-dlp**:
-   - Install via your package manager or download directly from the [official releases page](https://github.com/yt-dlp/yt-dlp/releases/latest).
+After building on Windows, your app is here:
 
-2. **ffmpeg**:
-   - Install via your package manager, e.g., `sudo apt install ffmpeg`.
-     
+- `app\VidVortex.exe`
 
-   ### Installing `yt-dlp` and `ffmpeg`
+For macOS/Linux, the output app path depends on your packaging format.
 
-#### **For Windows**
+---
 
-1. **Install `yt-dlp`**:
-   - **Download**: Go to the [yt-dlp releases page](https://github.com/yt-dlp/yt-dlp/releases/latest) and download the `yt-dlp.exe` file.
-   - **Move to a Folder**: Place the downloaded `yt-dlp.exe` file in a folder (e.g., `C:\yt-dlp\`).
-   - **Add to PATH**:
-     - Right-click on `This PC` or `Computer` and select `Properties`.
-     - Click on `Advanced system settings` on the left.
-     - Click `Environment Variables`.
-     - Under `System variables`, find the `Path` variable, select it, and click `Edit`.
-     - Click `New` and add the path where you placed `yt-dlp.exe` (e.g., `C:\yt-dlp\`).
-     - Click `OK` to close all windows.
+## How To Use Inside The App
 
-2. **Install `ffmpeg`**:
-   - **Download**: Go to the [ffmpeg.org download page](https://ffmpeg.org/download.html) and download the Windows build.
-   - **Extract**: Unzip the downloaded file to a folder (e.g., `C:\ffmpeg\`).
-   - **Add to PATH**:
-     - Follow the same steps as above to open `Environment Variables`.
-     - Add the `bin` directory inside the `ffmpeg` folder to the `Path` variable (e.g., `C:\ffmpeg\bin\`).
-     - Click `OK` to close all windows.
+1. Paste URL
+2. Choose **Mode**:
+   - Audio
+   - Video
+3. For **YouTube** links, set **Browser for YouTube** on the **Download** tab if the site asks you to sign in or blocks metadata (see [YouTube cookies](#youtube-cookies-youtube-downloads) below)
+4. Click **Load Qualities**
+5. Keep **Best Available** or choose specific quality
+6. Click **Download Now**
+7. Watch status and progress bars on the right
 
-#### **For macOS**
+---
 
-1. **Install `Homebrew`** (if you don’t have it):
-   - Open Terminal and run:
-     ```bash
-     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-     ```
+## YouTube cookies (YouTube downloads)
 
-2. **Install `yt-dlp`**:
-   - In Terminal, run:
-     ```bash
-     brew install yt-dlp
-     ```
+These options exist so **YouTube** downloads and metadata (`Load Qualities`) work when Google treats traffic like a bot or asks you to sign in. They apply to **YouTube** in the app’s UI; `yt-dlp` may still send cookies to other sites if you paste other URLs.
 
-3. **Install `ffmpeg`**:
-   - In Terminal, run:
-     ```bash
-     brew install ffmpeg
-     ```
+### Download tab
 
-#### **For Linux**
+- **Browser for YouTube** — Choose the browser where you are already logged into [youtube.com](https://www.youtube.com). VidVortex passes that to `yt-dlp` (`--cookies-from-browser`). On Windows, **Firefox** often works more reliably than Chrome/Edge for this shortcut.
+- Link: **YouTube cookie help** — Opens the **YouTube cookies** tab with per-browser steps.
 
-1. **Install `yt-dlp`**:
-   - **Using pip**:
-     - Open Terminal and run:
-       ```bash
-       python3 -m pip install -U yt-dlp
-       ```
-   - **Using your package manager**:
-     - On Ubuntu/Debian:
-       ```bash
-       sudo apt update
-       sudo apt install yt-dlp
-       ```
-     - On Fedora:
-       ```bash
-       sudo dnf install yt-dlp
-       ```
+### YouTube cookies tab
 
-2. **Install `ffmpeg`**:
-   - On Ubuntu/Debian:
-     ```bash
-     sudo apt update
-     sudo apt install ffmpeg
-     ```
-   - On Fedora:
-     ```bash
-     sudo dnf install ffmpeg
-     ```
+- Short explanation of why cookies help **YouTube** downloads.
+- **YouTube export steps for:** — Dropdown (Google Chrome, Microsoft Edge, Firefox, etc.) with instructions for each.
+- **YouTube cookies.txt (upload)** — Choose a Netscape-format `cookies.txt` exported while signed into YouTube (after picking **Browser for YouTube** on Download). **Clear YouTube cookies file** removes the path and unlocks the browser.
+- Official **yt-dlp** links for exporting YouTube cookies and the cookies FAQ.
 
-### Verify Installation
+### Locking the browser after upload
 
-After installing, you can verify that both `yt-dlp` and `ffmpeg` are correctly installed by opening your terminal or command prompt and running:
+After you save a **YouTube cookies.txt** file, **Browser for YouTube** **locks** to the browser you had selected at upload time. That keeps the session aligned with the file. To change it:
 
-```bash
-yt-dlp --version
-ffmpeg -version
-```
+- Upload a new `cookies.txt` (re-locks to the current browser choice), or  
+- **Clear YouTube cookies file**, or  
+- **Unlock YouTube browser** on the Download tab.
 
-If both commands return version information, the installations were successful.
+Settings (including path, browser, and lock) are stored in your user folder as **`~/.vidvortex/settings.json`** (on Windows: **`%USERPROFILE%\.vidvortex\settings.json`**). The desktop **`VidVortex`** folder is only for downloads.
 
-## Installation
+### Command line (advanced)
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/yourusername/VidVortex.git
-   cd VidVortex
-   ```
+The engine also supports `--cookies-from-browser` and `--cookies-file`; see `vidvortex.py --help`. Settings keys `cookies_file`, `cookies_from_browser`, and `cookies_locked_browser` match the desktop app.
 
-2. **Make the Script Executable**:
-   ```bash
-   chmod +x VidVortex.sh
-   ```
+---
 
-## Usage
+## Output Location
 
-1. **Run the Script**:
-   ```bash
-   ./VidVortex.sh
-   ```
+The app creates this folder on the current user's desktop:
 
-2. **Enter the YouTube Video URL**: When prompted, paste the URL of the YouTube video you wish to download.
+- `VidVortex/audio`
+- `VidVortex/video`
 
-3. **Follow the Prompts**:
-   - The script will automatically select the best video and audio formats available.
-   - If the best available resolution is below 1080p, it will ask if you wish to proceed.
+VidVortex does **not** write log files under `VidVortex/`. The desktop app shows messages in the **Activity** panel only.
 
-4. **Check Your Downloads**:
-   - All downloads are saved to the "Video Downloads" folder on your desktop.
-   - Logs are also saved in the same folder and will open automatically after the process completes.
+---
+
+## Dependencies
+
+Required runtime dependencies:
+
+- `yt-dlp`
+- `ffmpeg`
+
+If missing, install them on your computer before using the app.
+
+---
+
+## About
+
+- Developed by Estebanech
+- Portfolio: [estebanech.com](https://estebanech.com)
+- Powered by `yt-dlp` and `ffmpeg`
+- I built this with the intention of always saving the best quality audio or video of things that I loved, without using sketchy websites full of ads.
+
+---
 
 ## Troubleshooting
 
-- **Permissions Denied**: If you encounter a "Permissions Denied" error, ensure you have made the script executable using the `chmod +x VidVortex.sh` command.
-- **Missing Dependencies**: Ensure `yt-dlp` and `ffmpeg` are installed and accessible from your system's PATH.
+1. Check right-side logs in the app
+2. Confirm URL is valid (`http` / `https`)
+3. Click **Load Qualities** again for the current link
+4. Ensure `yt-dlp` and `ffmpeg` are installed
+5. **YouTube:** If you see sign-in / bot messages, use **Browser for YouTube** or upload **YouTube cookies.txt** on the **YouTube cookies** tab, update `yt-dlp` (`yt-dlp -U`), and try again
 
-## Contributing
+---
 
-Feel free to fork this repository, make changes, and submit a pull request. Contributions are welcome!
+## Main Files
+
+- `build_app.bat` - builds the app
+- `app\VidVortex.exe` - app you open
+- `vidvortex_app.py` - app code
+- `vidvortex.py` - download engine
+
+---
+
+## Git-Friendly Workflow
+
+Use this structure to keep the repo clean and easy to maintain:
+
+- Keep source files in version control (`vidvortex.py`, `vidvortex_app.py`, `build_app.bat`, docs)
+- Do not commit local build output folders or temporary artifacts
+- Write clear commit messages that explain the user-facing change
+- Keep README updates in the same commit as related behavior/UI changes
+- Tag stable versions before sharing builds so users can download known-good releases
+
+Suggested branch naming:
+
+- `feature/<short-name>`
+- `fix/<short-name>`
+- `docs/<short-name>`
+
+---
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT

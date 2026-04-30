@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+build/
+app/VidVortex.exe
+build.log
+.DS_Store
+Thumbs.db
