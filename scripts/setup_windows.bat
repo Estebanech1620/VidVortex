@@ -34,6 +34,8 @@ call :UPGRADE_YTDLP
 call :INSTALL_DEP ffmpeg "Gyan.FFmpeg" ffmpeg
 if errorlevel 1 exit /b 1
 
+call :UPGRADE_FFMPEG
+
 echo [VidVortex] Dependency setup complete.
 echo [VidVortex] Installed in normal Windows package-manager locations (PATH).
 exit /b 0
@@ -93,7 +95,7 @@ echo [VidVortex] %NAME% is available.
 exit /b 0
 
 :UPGRADE_YTDLP
-echo [VidVortex] Updating yt-dlp if a newer version is available...
+echo [VidVortex] Updating yt-dlp ^(package managers, then built-in -U, then pip^)...
 call :HAS_CMD winget
 if not errorlevel 1 (
   winget upgrade --id "yt-dlp.yt-dlp" --silent --accept-source-agreements --accept-package-agreements
@@ -106,6 +108,46 @@ call :HAS_CMD scoop
 if not errorlevel 1 (
   scoop update yt-dlp
 )
+call :REFRESH_PATH
+call :HAS_CMD yt-dlp
+if not errorlevel 1 (
+  echo [VidVortex] yt-dlp self-update ^(-U^)...
+  yt-dlp -U
+)
+call :PIP_UPGRADE_YTDLP
+exit /b 0
+
+:PIP_UPGRADE_YTDLP
+echo [VidVortex] pip: upgrading yt-dlp ^(gets fixes faster than some store builds^)...
+py -3 -m pip --version >nul 2>nul && (
+  py -3 -m pip install --upgrade pip 2>nul
+  py -3 -m pip install --upgrade yt-dlp 2>nul
+  call :REFRESH_PATH
+  goto :PIP_YTDLP_DONE
+)
+python -m pip --version >nul 2>nul && (
+  python -m pip install --upgrade pip 2>nul
+  python -m pip install --upgrade yt-dlp 2>nul
+  call :REFRESH_PATH
+)
+:PIP_YTDLP_DONE
+exit /b 0
+
+:UPGRADE_FFMPEG
+echo [VidVortex] Updating ffmpeg if package managers offer a newer build...
+call :HAS_CMD winget
+if not errorlevel 1 (
+  winget upgrade --id "Gyan.FFmpeg" --silent --accept-source-agreements --accept-package-agreements
+)
+call :HAS_CMD choco
+if not errorlevel 1 (
+  choco upgrade ffmpeg -y
+)
+call :HAS_CMD scoop
+if not errorlevel 1 (
+  scoop update ffmpeg
+)
+call :REFRESH_PATH
 exit /b 0
 
 :ENSURE_PYTHON

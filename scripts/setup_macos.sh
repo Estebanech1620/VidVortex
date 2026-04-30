@@ -65,6 +65,13 @@ brew upgrade ffmpeg || echo "[VidVortex] ffmpeg already current or upgrade skipp
 
 ensure_brew_shellenv
 
+if command -v yt-dlp >/dev/null 2>&1; then
+  echo "[VidVortex] yt-dlp built-in self-update (-U)..."
+  yt-dlp -U || echo "[VidVortex] yt-dlp -U skipped or already current (use brew upgrade yt-dlp if needed)."
+fi
+
+ensure_brew_shellenv
+
 if ! command -v yt-dlp >/dev/null 2>&1 || ! command -v ffmpeg >/dev/null 2>&1 || ! command -v python3 >/dev/null 2>&1; then
   echo "[Error] Dependencies were not installed correctly." >&2
   echo "[Hint] Open a new Terminal and run: eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >&2
