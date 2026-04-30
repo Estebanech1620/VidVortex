@@ -63,8 +63,8 @@ jobs:
           mkdir -p "${{ matrix.package_dir }}"
           cp "${{ matrix.executable_path }}" "${{ matrix.package_dir }}/VidVortex"
           cp "scripts/setup_macos.sh" "${{ matrix.package_dir }}/setup_macos.sh"
-          cp "release/RUN_FIRST_MACOS.sh" "${{ matrix.package_dir }}/RUN_FIRST.sh"
-          chmod +x "${{ matrix.package_dir }}/VidVortex" "${{ matrix.package_dir }}/setup_macos.sh" "${{ matrix.package_dir }}/RUN_FIRST.sh"
+          cp "release/RUN_FIRST.command" "${{ matrix.package_dir }}/RUN_FIRST.command"
+          chmod +x "${{ matrix.package_dir }}/VidVortex" "${{ matrix.package_dir }}/setup_macos.sh" "${{ matrix.package_dir }}/RUN_FIRST.command"
           (cd "${{ matrix.package_dir }}" && zip -r "../../${{ matrix.archive_name }}" .)
 
       - name: Upload build artifact

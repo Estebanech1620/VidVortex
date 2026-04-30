@@ -33,6 +33,12 @@ Download audio or video from a URL with a simple desktop app.
 
 Note: macOS may open a short setup window while installers run. You should not need to type commands yourself.
 
+**Release zip notes (macOS):**
+
+- **Architecture:** Builds from [GitHub Actions](https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners) use **macOS Apple Silicon** runners, so `VidVortex` in the zip is typically **arm64** only. It runs natively on Apple Silicon Macs; **Intel Macs** need a build produced on Intel/`x86_64` (for example build locally with `scripts/build_macos.sh`)—a generic arm64 binary will not run there.
+- **Gatekeeper:** Downloads are usually **not notarized**. If macOS blocks the app, use **System Settings → Privacy & Security** as above, or **Control-click → Open** on `VidVortex` or `RUN_FIRST.command` the first time. Safari/Chrome may mark the folder with quarantine; that is normal for unsigned zips.
+- **Setup script:** `setup_macos.sh` requires **[Homebrew](https://brew.sh)**. Users without Homebrew must install it before first run (the script exits with a clear error otherwise).
+
 ---
 
 ## Download And Run (Linux)
