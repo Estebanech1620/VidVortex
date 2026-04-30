@@ -66,6 +66,7 @@ If there is no **Open Anyway** button yet:
 **Notes**
 
 - **Homebrew** is required for the macOS setup step. If you do not have it, install it from [brew.sh](https://brew.sh) first.
+- If setup prints **`/opt/homebrew is not writable`** (or similar), Homebrew’s folder is owned by the wrong user—often after using **`sudo brew`**. Fix once in Terminal: **`sudo chown -R "$(whoami)" "$(brew --prefix)"`**, then run **`RUN_FIRST.command`** again.
 - Use the **Intel** zip only on Intel Macs and the **Apple Silicon** zip only on Apple Silicon Macs.
 
 ---
