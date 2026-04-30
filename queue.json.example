@@ -1,0 +1,13 @@
+[
+  {
+    "url": "https://www.youtube.com/watch?v=VIDEO_ID_1",
+    "mode": "audio",
+    "status": "pending"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=VIDEO_ID_2",
+    "mode": "video",
+    "quality": 1080,
+    "status": "pending"
+  }
+]
