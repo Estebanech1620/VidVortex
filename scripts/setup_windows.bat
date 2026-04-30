@@ -11,6 +11,8 @@ if errorlevel 1 exit /b 1
 call :INSTALL_DEP yt-dlp "yt-dlp.yt-dlp" yt-dlp
 if errorlevel 1 exit /b 1
 
+call :UPGRADE_YTDLP
+
 call :INSTALL_DEP ffmpeg "Gyan.FFmpeg" ffmpeg
 if errorlevel 1 exit /b 1
 
@@ -60,6 +62,22 @@ exit /b 1
 
 :DEP_READY
 echo [VidVortex] %NAME% is available.
+exit /b 0
+
+:UPGRADE_YTDLP
+echo [VidVortex] Updating yt-dlp if a newer version is available...
+call :HAS_CMD winget
+if not errorlevel 1 (
+  winget upgrade --id "yt-dlp.yt-dlp" --silent --accept-source-agreements --accept-package-agreements
+)
+call :HAS_CMD choco
+if not errorlevel 1 (
+  choco upgrade yt-dlp -y
+)
+call :HAS_CMD scoop
+if not errorlevel 1 (
+  scoop update yt-dlp
+)
 exit /b 0
 
 :ENSURE_PYTHON

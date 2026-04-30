@@ -15,10 +15,11 @@ else
   brew install python
 fi
 
-if command -v yt-dlp >/dev/null 2>&1; then
-  echo "[VidVortex] yt-dlp already exists on PATH."
+echo "[VidVortex] Ensuring yt-dlp is installed and up to date..."
+brew update
+if brew list yt-dlp >/dev/null 2>&1; then
+  brew upgrade yt-dlp || echo "[VidVortex] yt-dlp already current or upgrade skipped."
 else
-  echo "[VidVortex] Installing yt-dlp with Homebrew..."
   brew install yt-dlp
 fi
 

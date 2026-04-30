@@ -28,6 +28,23 @@ install_with_zypper() {
   sudo zypper --non-interactive install python3 python3-pip yt-dlp ffmpeg
 }
 
+update_yt_dlp_only() {
+  echo "[VidVortex] Updating yt-dlp to latest package-manager version (recommended for YouTube)..."
+  if command -v apt-get >/dev/null 2>&1; then
+    sudo apt-get update -qq
+    sudo apt-get install -y yt-dlp
+  elif command -v dnf >/dev/null 2>&1; then
+    sudo dnf upgrade -y yt-dlp || sudo dnf install -y yt-dlp
+  elif command -v pacman >/dev/null 2>&1; then
+    sudo pacman -Sy --noconfirm yt-dlp
+  elif command -v zypper >/dev/null 2>&1; then
+    sudo zypper --non-interactive refresh
+    sudo zypper --non-interactive install -y yt-dlp
+  else
+    echo "[VidVortex] No supported package manager to refresh yt-dlp; upgrade yt-dlp manually if needed." >&2
+  fi
+}
+
 if need_cmd python3 || need_cmd yt-dlp || need_cmd ffmpeg; then
   if command -v apt-get >/dev/null 2>&1; then
     install_with_apt
@@ -52,6 +69,8 @@ if ! command -v yt-dlp >/dev/null 2>&1 || ! command -v ffmpeg >/dev/null 2>&1; t
   echo "[Error] Dependencies were not installed correctly." >&2
   exit 1
 fi
+
+update_yt_dlp_only
 
 echo "[VidVortex] Dependency setup complete."
 echo "[VidVortex] Installed in standard Linux package-manager locations (PATH)."
