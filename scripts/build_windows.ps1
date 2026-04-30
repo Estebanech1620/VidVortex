@@ -13,9 +13,18 @@ if (Get-Command python -ErrorAction SilentlyContinue) {
   throw "Python was not found on PATH."
 }
 
+function Invoke-VidVortexPython {
+  param([Parameter(ValueFromRemainingArguments = $true)][string[]]$Args)
+  if ($python -eq "py -3") {
+    & py -3 @Args
+  } else {
+    & $python @Args
+  }
+}
+
 Write-Host "[VidVortex] Installing build dependencies..."
-Invoke-Expression "$python -m pip install --upgrade pip"
-Invoke-Expression "$python -m pip install -r requirements-desktop.txt"
+Invoke-VidVortexPython -Args @("-m", "pip", "install", "--upgrade", "pip")
+Invoke-VidVortexPython -Args @("-m", "pip", "install", "-r", "requirements-desktop.txt")
 
 $distDir = Join-Path $repoRoot "dist\windows"
 if (Test-Path $distDir) {
@@ -23,13 +32,45 @@ if (Test-Path $distDir) {
 }
 New-Item -ItemType Directory -Path $distDir | Out-Null
 
-$iconArg = ""
-if (Test-Path "app_logo.ico") {
-  $iconArg = "--icon app_logo.ico"
+if (-not (Test-Path "app_logo.ico")) {
+  if (Test-Path "app_logo.png") {
+    Write-Host "[VidVortex] Generating app_logo.ico from app_logo.png..."
+    $icoGen = @"
+from PIL import Image
+img = Image.open('app_logo.png').convert('RGBA')
+img.save(
+    'app_logo.ico',
+    format='ICO',
+    sizes=[(16, 16), (24, 24), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)],
+)
+"@
+    Invoke-VidVortexPython -Args @("-c", $icoGen)
+  } else {
+    throw "Missing branding assets: need app_logo.ico in the application repo root (or app_logo.png to generate it)."
+  }
+}
+
+if (-not (Test-Path "app_logo.ico")) {
+  throw "app_logo.ico was not created. Check app_logo.png and Pillow install."
 }
 
 Write-Host "[VidVortex] Building Windows executable..."
-Invoke-Expression "$python -m PyInstaller --noconfirm --clean --name VidVortex --onefile --windowed --distpath ""$distDir"" $iconArg --add-data ""yt-dlp.conf.example;."" --add-data ""profiles.json.example;."" --add-data ""queue.json.example;."" --collect-all ttkbootstrap vidvortex_app.py"
+Invoke-VidVortexPython -Args @(
+  "-m", "PyInstaller",
+  "--noconfirm",
+  "--clean",
+  "--name", "VidVortex",
+  "--onefile",
+  "--windowed",
+  "--distpath", $distDir,
+  "--icon", "app_logo.ico",
+  "--add-data", "yt-dlp.conf.example;.",
+  "--add-data", "profiles.json.example;.",
+  "--add-data", "queue.json.example;.",
+  "--add-data", "app_logo.ico;.",
+  "--collect-all", "ttkbootstrap",
+  "vidvortex_app.py"
+)
 
 $exePath = Join-Path $distDir "VidVortex.exe"
 if (-not (Test-Path $exePath)) {

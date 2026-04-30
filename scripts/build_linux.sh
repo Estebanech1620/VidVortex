@@ -14,9 +14,9 @@ DIST_DIR="$REPO_ROOT/dist/linux"
 rm -rf "$DIST_DIR"
 mkdir -p "$DIST_DIR"
 
-ICON_ARG=()
-if [[ -f app_logo.png ]]; then
-  ICON_ARG=(--icon app_logo.png)
+if [[ ! -f app_logo.png ]]; then
+  echo "[VidVortex] ERROR: Missing app_logo.png in application repo root — Linux builds need it for an embedded icon." >&2
+  exit 1
 fi
 
 echo "[VidVortex] Building Linux executable..."
@@ -27,10 +27,11 @@ echo "[VidVortex] Building Linux executable..."
   --onefile \
   --windowed \
   --distpath "$DIST_DIR" \
-  ${ICON_ARG[@]+"${ICON_ARG[@]}"} \
+  --icon app_logo.png \
   --add-data "yt-dlp.conf.example:." \
   --add-data "profiles.json.example:." \
   --add-data "queue.json.example:." \
+  --add-data "app_logo.png:." \
   --collect-all ttkbootstrap \
   vidvortex_app.py
 

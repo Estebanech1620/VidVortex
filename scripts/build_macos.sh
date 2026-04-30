@@ -14,9 +14,19 @@ DIST_DIR="$REPO_ROOT/dist/macos"
 rm -rf "$DIST_DIR"
 mkdir -p "$DIST_DIR"
 
-ICON_ARG=()
+ICON_FILE=""
 if [[ -f app_logo.icns ]]; then
-  ICON_ARG=(--icon app_logo.icns)
+  ICON_FILE="app_logo.icns"
+elif [[ -f app_logo.png ]]; then
+  ICON_FILE="app_logo.png"
+else
+  echo "[VidVortex] ERROR: Missing app_logo.icns or app_logo.png in application repo root — macOS builds need one for an embedded icon." >&2
+  exit 1
+fi
+
+EXTRA_DATA=()
+if [[ -f app_logo.png ]]; then
+  EXTRA_DATA+=(--add-data "app_logo.png:.")
 fi
 
 echo "[VidVortex] Building macOS executable..."
@@ -27,10 +37,11 @@ echo "[VidVortex] Building macOS executable..."
   --onefile \
   --windowed \
   --distpath "$DIST_DIR" \
-  ${ICON_ARG[@]+"${ICON_ARG[@]}"} \
+  --icon "$ICON_FILE" \
   --add-data "yt-dlp.conf.example:." \
   --add-data "profiles.json.example:." \
   --add-data "queue.json.example:." \
+  ${EXTRA_DATA[@]+"${EXTRA_DATA[@]}"} \
   --collect-all ttkbootstrap \
   vidvortex_app.py
 
