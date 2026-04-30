@@ -4,10 +4,11 @@ $ErrorActionPreference = "Stop"
 $repoRoot = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 Set-Location $repoRoot
 
-if (Get-Command py -ErrorAction SilentlyContinue) {
-  $python = "py -3"
-} elseif (Get-Command python -ErrorAction SilentlyContinue) {
+# Prefer `python` on PATH (matches actions/setup-python on CI); `py -3` can point at a different install without deps.
+if (Get-Command python -ErrorAction SilentlyContinue) {
   $python = "python"
+} elseif (Get-Command py -ErrorAction SilentlyContinue) {
+  $python = "py -3"
 } else {
   throw "Python was not found on PATH."
 }

@@ -27,7 +27,7 @@ echo "[VidVortex] Building macOS executable..."
   --onefile \
   --windowed \
   --distpath "$DIST_DIR" \
-  "${ICON_ARG[@]}" \
+  ${ICON_ARG[@]+"${ICON_ARG[@]}"} \
   --add-data "yt-dlp.conf.example:." \
   --add-data "profiles.json.example:." \
   --add-data "queue.json.example:." \
