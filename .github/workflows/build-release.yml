@@ -53,13 +53,27 @@ jobs:
       - name: Checkout distribution repo
         uses: actions/checkout@v4
 
-      # Repository and token are configured only in Actions secrets (not in this file).
+      # Application sources live in a separate repository (private). Configure:
+      # - BUILD_APP_REPOSITORY (e.g. Estebanech1620/VidVortex_Source)
+      # - BUILD_APP_CHECKOUT_TOKEN (PAT with read access to that repo)
+      #
+      # If BUILD_APP_CHECKOUT_TOKEN is omitted, checkout falls back to GITHUB_TOKEN (works only when the app repo is public).
+      - name: Require application repository secret
+        shell: bash
+        env:
+          APP_REPO: ${{ secrets.BUILD_APP_REPOSITORY }}
+        run: |
+          if [ -z "${APP_REPO}" ]; then
+            echo "::error::Missing Actions secret BUILD_APP_REPOSITORY. Set it to owner/name of the repo that contains vidvortex_app.py (for example Estebanech1620/VidVortex_Source)."
+            exit 1
+          fi
+
       - name: Checkout application tree
         uses: actions/checkout@v4
         with:
           repository: ${{ secrets.BUILD_APP_REPOSITORY }}
           path: app
-          token: ${{ secrets.BUILD_APP_CHECKOUT_TOKEN }}
+          token: ${{ secrets.BUILD_APP_CHECKOUT_TOKEN || github.token }}
 
       - name: Overlay packaging into application tree
         shell: bash
