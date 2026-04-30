@@ -18,8 +18,8 @@ Download audio or video from a URL with a simple desktop app.
 
 1. Download `VidVortex-windows.zip` from Releases
 2. Extract the zip to any folder
-3. Double-click `RUN_FIRST.bat` (installs Python, yt-dlp, ffmpeg if missing)
-4. The script launches `VidVortex.exe`
+3. Double-click `setup_windows.bat` (installs Python, yt-dlp, ffmpeg if missing)
+4. After setup finishes, double-click `VidVortex.exe`
 
 ---
 
@@ -52,7 +52,7 @@ Note: Some distributions hide `.desktop` launches behind one approval click the 
 Each OS zip includes:
 
 - Main app executable (`VidVortex.exe` or `VidVortex`)
-- First-run launcher (`RUN_FIRST.bat` on Windows; macOS uses `RUN_FIRST.command`; Linux uses `RUN_FIRST.desktop`)
+- Launch helper (`RUN_FIRST.command` on macOS; `RUN_FIRST.desktop` on Linux)
 - Dependency installer for that OS:
   - `setup_windows.bat`
   - `setup_linux.sh`
@@ -94,7 +94,7 @@ Required runtime dependencies:
 
 If missing, install them on your computer before using the app.
 
-The release zips include first-run launchers that install these automatically when possible.
+The release zips include setup scripts so dependencies can be installed when missing.
 
 ---
 
