@@ -3,6 +3,7 @@ __pycache__/
 build/
 dist/
 package/
+_ci_art/
 app/VidVortex.exe
 build.log
 .DS_Store
