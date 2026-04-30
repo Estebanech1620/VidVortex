@@ -1,4 +1,4 @@
-# VidVortex
+﻿# VidVortex
 
 Download audio or video from a URL with a simple desktop app.
 
@@ -26,20 +26,24 @@ Download audio or video from a URL with a simple desktop app.
 ## Download And Run (macOS)
 
 1. Download `VidVortex-macos.zip` from Releases
-2. Extract the zip
-3. Run `chmod +x RUN_FIRST.sh` once if needed
-4. Run `./RUN_FIRST.sh` in Terminal (installs Python, yt-dlp, ffmpeg if missing)
-5. If macOS blocks launch, allow it in Security settings and run again
+2. Extract the zip (double-click it in Finder)
+3. Open the extracted folder and double-click `RUN_FIRST.command`
+4. If macOS blocks first launch, open **System Settings → Privacy & Security**, approve VidVortex, then double-click `RUN_FIRST.command` again
+5. On first run, follow any installer prompts (Python, yt-dlp, ffmpeg via Homebrew)
+
+Note: macOS may open a short setup window while installers run. You should not need to type commands yourself.
 
 ---
 
 ## Download And Run (Linux)
 
 1. Download `VidVortex-linux.zip` from Releases
-2. Extract the zip
-3. Run `chmod +x RUN_FIRST.sh` once if needed
-4. Run `./RUN_FIRST.sh` in Terminal (installs Python, yt-dlp, ffmpeg if missing)
-5. The script launches `VidVortex`
+2. Extract the zip using your file manager
+3. Open the extracted folder and double-click `RUN_FIRST.desktop`
+4. If your desktop asks for permission to run the script, choose **Run** or **Execute**
+5. On first run, follow any installer prompts (Python, yt-dlp, ffmpeg)
+
+Note: Some distributions hide `.desktop` launches behind one approval click the first time.
 
 ---
 
@@ -48,7 +52,7 @@ Download audio or video from a URL with a simple desktop app.
 Each OS zip includes:
 
 - Main app executable (`VidVortex.exe` or `VidVortex`)
-- First-run launcher (`RUN_FIRST.bat` on Windows, `RUN_FIRST.sh` on Linux/macOS)
+- First-run launcher (`RUN_FIRST.bat` on Windows; macOS uses `RUN_FIRST.command`; Linux uses `RUN_FIRST.desktop`)
 - Dependency installer for that OS:
   - `setup_windows.bat`
   - `setup_linux.sh`
@@ -90,11 +94,7 @@ Required runtime dependencies:
 
 If missing, install them on your computer before using the app.
 
-The release zips already include first-run setup scripts. If you run from source, use:
-
-- Windows: `scripts\setup_windows.bat`
-- Linux: `scripts/setup_linux.sh`
-- macOS: `scripts/setup_macos.sh`
+The release zips include first-run launchers that install these automatically when possible.
 
 ---
 
@@ -116,34 +116,12 @@ The release zips already include first-run setup scripts. If you run from source
 
 ---
 
-## Main Files
+## On This Repository
 
-- `build_app.bat` - builds the app
-- `app\VidVortex.exe` - app you open
-- `vidvortex_app.py` - app code
-- `vidvortex.py` - download engine
-
----
-
-## Git-Friendly Workflow
-
-Use this structure to keep the repo clean and easy to maintain:
-
-- Keep source files in version control (`vidvortex.py`, `vidvortex_app.py`, `build_app.bat`, docs)
-- Do not commit local build output folders or temporary artifacts
-- Write clear commit messages that explain the user-facing change
-- Keep README updates in the same commit as related behavior/UI changes
-- Tag stable versions before sharing builds so users can download known-good releases
-
-Suggested branch naming:
-
-- `feature/<short-name>`
-- `fix/<short-name>`
-- `docs/<short-name>`
+This public repository keeps downloads on **GitHub Releases**. Grab the zip for your OS there.
 
 ---
 
 ## License
 
 MIT
-# VidVortex
