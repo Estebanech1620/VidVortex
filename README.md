@@ -207,6 +207,8 @@ Release zips include setup scripts so dependencies can be installed when missing
 - Tag **`v*`** here to run Actions and publish release assets.
 - Do not commit `vidvortex*.py`, `requirements-desktop.txt`, or build outputs into this repo (see `.gitignore`).
 
+**GitHub Actions:** CI clones **[VidVortex_Source](https://github.com/Estebanech1620/VidVortex_Source)**. If that repo is **private**, add secret **`VIDVORTEX_SOURCE_CHECKOUT_TOKEN`** on **VidVortex** (Settings → Secrets → Actions): a PAT with read access to `VidVortex_Source`. If Source is **public**, no secret is needed (the workflow uses `GITHUB_TOKEN`).
+
 ---
 
 ## On This Repository

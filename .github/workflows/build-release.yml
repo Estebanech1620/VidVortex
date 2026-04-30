@@ -58,11 +58,14 @@ jobs:
       - name: Checkout distribution repo (packaging only)
         uses: actions/checkout@v4
 
+      # If VidVortex_Source is private, set secret VIDVORTEX_SOURCE_CHECKOUT_TOKEN (read access).
+      # If unset, falls back to github.token (works when Source is public).
       - name: Checkout application source
         uses: actions/checkout@v4
         with:
           repository: Estebanech1620/VidVortex_Source
           path: app
+          token: ${{ secrets.VIDVORTEX_SOURCE_CHECKOUT_TOKEN || github.token }}
 
       - name: Overlay CI packaging scripts and release helpers
         shell: bash
