@@ -24,7 +24,7 @@ Download the zip for your system from **[GitHub Releases](https://github.com/Est
 
 1. Download **`VidVortex-windows.zip`** from Releases
 2. Extract the zip to any folder
-3. Double-click **`setup_windows.bat`** (installs Python, yt-dlp, and ffmpeg if they are missing, and **updates yt-dlp** when your package manager has a newer build)
+3. Double-click **`setup_windows.bat`** (installs Python, yt-dlp, and ffmpeg if they are missing, and **updates yt-dlp** when your package manager has a newer build). The window stays open afterward so you can read any messages; for automated runs use **`setup_windows.bat nopause`**.
 4. After setup finishes, double-click **`VidVortex.exe`**
 
 ---
@@ -202,6 +202,23 @@ The included setup scripts install these when they are missing and **keep them c
 6. On **macOS**, if the app or **`RUN_FIRST.command`** won’t run and you see a security warning, follow **[If macOS blocks VidVortex (security popup)](#if-macos-blocks-vidvortex-security-popup)** above
 7. On **macOS**, if qualities fail or downloads never start but **`yt-dlp -F`** works in Terminal, always open **`VidVortex.command`** (not **`VidVortex.bin`**), or run **`VidVortex.bin`** only from Terminal after **`eval "$(brew shellenv)"`**
 8. On **macOS**, if setup says **`/opt/homebrew is not writable`** or **`brew`** cannot update, see **[Homebrew not writable (chown fix)](#homebrew-not-writable-chown-fix)** above
+
+---
+
+## Packaging (maintainers)
+
+CI builds **`VidVortex-windows.zip`** with **`app/scripts/build_windows.ps1`** after overlaying this repo’s **`scripts/`** into the application checkout (**`app/`**).
+
+**Updating the zip on GitHub Releases:** Pushing commits alone does not change release downloads. Assets upload when you **push a `v*` tag**, or when you run **Actions → Build Cross-Platform Packages → Run workflow** and set **release_tag** to an **existing** tag (for example `v1.2.0`). Leave **release_tag** empty if you only want workflow artifacts (the Releases page stays unchanged).
+
+To rebuild the Windows zip **without** running PyInstaller again (for example after changing **`setup_windows.bat`**), use **`dist/windows/VidVortex.exe`** from a previous build—or pass any **`VidVortex.exe`** path:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/repack_windows_zip.ps1
+powershell -ExecutionPolicy Bypass -File scripts/repack_windows_zip.ps1 path\to\VidVortex.exe
+```
+
+Output is **`dist/VidVortex-windows.zip`** (same layout as CI: **`VidVortex.exe`** + **`setup_windows.bat`**).
 
 ---
 

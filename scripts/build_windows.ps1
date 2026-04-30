@@ -1,7 +1,8 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$repoRoot = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
+$repoRoot = Split-Path -Parent $PSScriptRoot
+. (Join-Path $PSScriptRoot "Package-WindowsZip.ps1")
 Set-Location $repoRoot
 
 # Prefer `python` on PATH (matches actions/setup-python on CI); `py -3` can point at a different install without deps.
@@ -79,24 +80,4 @@ if (-not (Test-Path $exePath)) {
 
 Write-Host "[VidVortex] Windows package ready: $exePath"
 
-# Zip for GitHub Releases: exe + setup (Windows has no RUN_FIRST launcher; use setup_windows.bat then VidVortex.exe)
-$pkgDir = Join-Path $repoRoot "package\windows"
-if (Test-Path $pkgDir) {
-  Remove-Item $pkgDir -Recurse -Force
-}
-New-Item -ItemType Directory -Path $pkgDir | Out-Null
-
-Copy-Item $exePath (Join-Path $pkgDir "VidVortex.exe")
-Copy-Item (Join-Path $repoRoot "scripts\setup_windows.bat") (Join-Path $pkgDir "setup_windows.bat")
-
-$distOut = Join-Path $repoRoot "dist"
-if (-not (Test-Path $distOut)) {
-  New-Item -ItemType Directory -Path $distOut | Out-Null
-}
-$zipPath = Join-Path $distOut "VidVortex-windows.zip"
-if (Test-Path $zipPath) {
-  Remove-Item $zipPath -Force
-}
-Compress-Archive -Path (Join-Path $pkgDir "*") -DestinationPath $zipPath
-
-Write-Host "[VidVortex] Release zip (same layout as CI): $zipPath"
+Publish-VidVortexWindowsZip -RepoRoot $repoRoot -ExePath $exePath

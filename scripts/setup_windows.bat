@@ -1,8 +1,26 @@
 @echo off
 setlocal EnableExtensions
 
-cd /d "%~dp0"
+cd /d "%~dp0."
+if errorlevel 1 (
+  echo [Error] Could not switch to this script's folder.
+  echo        Open Command Prompt, run:  cd /d "full\path\to\scripts"
+  echo        Then run:  setup_windows.bat
+  set EC=1
+  goto :WAIT_EXIT
+)
 
+call :MAIN
+set "EC=%ERRORLEVEL%"
+
+:WAIT_EXIT
+if /i "%~1"=="nopause" exit /b %EC%
+echo.
+echo Press any key to close this window...
+pause >nul
+exit /b %EC%
+
+:MAIN
 echo [VidVortex] Windows dependency setup starting...
 
 call :ENSURE_PYTHON
@@ -22,7 +40,8 @@ exit /b 0
 
 :HAS_CMD
 where "%~1" >nul 2>nul
-exit /b %errorlevel%
+if errorlevel 1 exit /b 1
+exit /b 0
 
 :INSTALL_DEP
 set "NAME=%~1"

@@ -2,6 +2,11 @@ name: Build Cross-Platform Packages
 
 on:
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Existing release tag to attach zips to (e.g. v1.2.0). Leave empty to build artifacts only — Releases are not updated unless this is set or you push a v* tag."
+        required: false
+        default: ""
   push:
     tags:
       - "v*"
@@ -17,7 +22,7 @@ jobs:
           - runner: windows-latest
             artifact_name: VidVortex-windows
             upload_path: app/dist/VidVortex-windows.zip
-            build_cmd: powershell -ExecutionPolicy Bypass -File app/scripts/build_windows.ps1
+            build_cmd: ./app/scripts/build_windows.ps1
             archive_kind: skip
 
           - runner: ubuntu-latest
@@ -88,7 +93,7 @@ jobs:
           python-version: "3.12"
 
       - name: Build package
-        shell: bash
+        shell: ${{ matrix.runner == 'windows-latest' && 'pwsh' || 'bash' }}
         run: ${{ matrix.build_cmd }}
 
       - name: Archive package (Linux)
@@ -121,7 +126,8 @@ jobs:
           path: ${{ matrix.upload_path }}
 
       - name: Upload release asset
-        if: startsWith(github.ref, 'refs/tags/')
+        if: ${{ github.ref_type == 'tag' || (github.event_name == 'workflow_dispatch' && github.event.inputs.release_tag != '') }}
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.release_tag || github.ref_name }}
           files: ${{ matrix.upload_path }}
