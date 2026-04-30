@@ -9,11 +9,3 @@ build.log
 .DS_Store
 Thumbs.db
 
-# Do not commit local application sources or build assets here (distribution repo only)
-/vidvortex*.py
-/requirements-desktop.txt
-/*.spec
-/build_app.bat
-/app_logo.ico
-/app_logo.png
-/*.example

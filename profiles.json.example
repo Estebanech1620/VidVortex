@@ -1,0 +1,32 @@
+{
+  "fast": {
+    "retries": 5,
+    "fragment_retries": 5,
+    "retry_sleep": "exp=1:8",
+    "fragment_retry_sleep": "fragment:exp=1:8",
+    "sleep_requests": 0.0,
+    "min_sleep_interval": 0.0,
+    "max_sleep_interval": 0.0,
+    "use_aria2c": true
+  },
+  "safe": {
+    "retries": 10,
+    "fragment_retries": 10,
+    "retry_sleep": "exp=1:20",
+    "fragment_retry_sleep": "fragment:exp=1:20",
+    "sleep_requests": 1.0,
+    "min_sleep_interval": 1.0,
+    "max_sleep_interval": 3.0,
+    "use_aria2c": false
+  },
+  "stealth": {
+    "retries": 15,
+    "fragment_retries": 15,
+    "retry_sleep": "exp=1:30",
+    "fragment_retry_sleep": "fragment:exp=1:30",
+    "sleep_requests": 2.0,
+    "min_sleep_interval": 2.0,
+    "max_sleep_interval": 6.0,
+    "use_aria2c": false
+  }
+}

@@ -138,3 +138,5 @@ The included setup scripts try to install these when they are missing.
 ## License
 
 **Proprietary — all rights reserved.** See [`LICENSE`](LICENSE). You may not use, copy, modify, or distribute the materials in this project without written permission from the copyright holder.
+
+# VidVortex_Public_Source
