@@ -131,7 +131,7 @@ The included setup scripts try to install these when they are missing.
 
 - Made by **Estebanech**
 - Site: [estebanech.com](https://estebanech.com)
-- Uses **yt-dlp** and **ffmpeg** under the hood
+- Powered by [**yt-dlp**](https://github.com/yt-dlp/yt-dlp) and [**FFmpeg**](https://github.com/FFmpeg/FFmpeg)
 
 ---
 
